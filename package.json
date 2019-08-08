@@ -9,7 +9,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,8 @@
   "homepage": "https://github.com/techreturners/programming_fundamentals_005#readme",
   "dependencies": {
     "jest": "^24.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0"
   }
 }

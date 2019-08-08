@@ -1,0 +1,260 @@
+const setUpGlobalObject = require("../lib/sugar");
+
+// Invoking this function adds the new methods to the Global Object
+setUpGlobalObject();
+
+describe("Object.size", () => {
+  test("returns the correct size when given an object", () => {
+    expect(
+      Object.size({
+        a: 1,
+        b: 2,
+        c: 3
+      })
+    ).toBe(3);
+
+    expect(
+      Object.size({
+        a: 1,
+        b: 2,
+        c: 3,
+        d: 4
+      })
+    ).toBe(4);
+
+    expect(
+      Object.size({
+        name: "Susan"
+      })
+    ).toBe(1);
+
+    expect(Object.size({})).toBe(0);
+  });
+});
+
+describe("Object.min", () => {
+  test("returns the smallest number of all values in an object", () => {
+    expect(
+      Object.min({
+        a: 4,
+        b: 3,
+        c: 2,
+        d: 9
+      })
+    ).toBe(2);
+
+    expect(
+      Object.min({
+        a: 434,
+        b: 342,
+        c: 200,
+        d: 9
+      })
+    ).toBe(9);
+  });
+});
+
+describe("Object.max", () => {
+  test("returns the largest number of all values in an object", () => {
+    expect(
+      Object.max({
+        a: 4,
+        b: 3,
+        c: 2,
+        d: 9
+      })
+    ).toBe(9);
+
+    expect(
+      Object.max({
+        a: 434,
+        b: 342,
+        c: 200,
+        d: 9
+      })
+    ).toBe(434);
+  });
+});
+
+describe("Object.clone", () => {
+  test("returns a copy of the object", () => {
+    const person1 = {
+      name: "Sally",
+      location: "Leeds"
+    };
+    const person2 = Object.clone(person1);
+
+    expect(person2 === person1).toBe(false);
+    expect(person2.name).toBe("Sally");
+    expect(person2.location).toBe("Leeds");
+  });
+});
+
+describe("Object.get", () => {
+  test("returns the value for the given key", () => {
+    expect(
+      Object.get(
+        {
+          name: "Sally",
+          location: "Leeds"
+        },
+        "name"
+      )
+    ).toBe("Sally");
+
+    expect(
+      Object.get(
+        {
+          name: "Sally",
+          location: "Leeds"
+        },
+        "location"
+      )
+    ).toBe("Leeds");
+  });
+
+  test("returns undefined if the key is not found", () => {
+    expect(
+      Object.get(
+        {
+          name: "Sally",
+          location: "Leeds"
+        },
+        "address"
+      )
+    ).toBe(undefined);
+
+    expect(
+      Object.get(
+        {
+          name: "Sally",
+          location: "Leeds"
+        },
+        "age"
+      )
+    ).toBe(undefined);
+  });
+});
+
+describe("Object.has", () => {
+  test("returns true if the object has the give key", () => {
+    const obj1 = { name: "Sally", location: "Leeds" };
+    expect(Object.has(obj1, "name")).toBe(true);
+    expect(Object.has(obj1, "location")).toBe(true);
+  });
+
+  test("returns false if the object does not have the give key", () => {
+    const obj1 = { name: "Sally", location: "Leeds" };
+    expect(Object.has(obj1, "postcode")).toBe(false);
+    expect(Object.has(obj1, "address")).toBe(false);
+  });
+
+  test("returns true if the object has the given key, but it is a falsey value", () => {
+    const obj1 = {
+      name: "Sally",
+      location: "Leeds",
+      address: null,
+      signedIn: false
+    };
+    expect(Object.has(obj1, "signedIn")).toBe(true);
+    expect(Object.has(obj1, "address")).toBe(true);
+  });
+});
+
+describe("Object.sum", () => {
+  test("returns the sum of all the values when all values are numbers", () => {
+    const obj = {
+      a: 1,
+      b: 4,
+      c: 10
+    };
+    expect(Object.sum(obj)).toBe(15);
+  });
+
+  test("returns 0 when the object has no key-value pairs", () => {
+    const obj = {};
+    expect(Object.sum(obj)).toBe(0);
+  });
+
+  test("ignores non-number values", () => {
+    const obj = {
+      a: 1,
+      b: 4,
+      c: false,
+      d: 10,
+      e: "cat"
+    };
+    expect(Object.sum(obj)).toBe(15);
+  });
+
+  test("returns 0 if no values are numbers", () => {
+    const obj = {
+      a: "dog",
+      b: "foo",
+      c: "bar",
+      d: "snail",
+      e: "cat"
+    };
+    expect(Object.sum(obj)).toBe(0);
+  });
+});
+
+describe("Object.invert", () => {
+  test("returns a new object which is the inversion of the given object", () => {
+    const original = {
+      name: "Sally",
+      location: "Leeds"
+    };
+
+    const expected = {
+      Sally: "name",
+      Leeds: "location"
+    };
+
+    // Checking we are getting a new object created
+    expect(Object.invert(original) === original).toBe(false);
+
+    expect(Object.invert(original)).toEqual(expected);
+  });
+
+  test("also works with more complex values", () => {
+    const original = {
+      name: "Sally",
+      location: "Leeds",
+      address: "5 Hull Road, Beeston"
+    };
+
+    const expected = {
+      Sally: "name",
+      Leeds: "location",
+      "5 Hull Road, Beeston": "address"
+    };
+
+    expect(Object.invert(original)).toEqual(expected);
+  });
+});
+
+describe("Object.addAll", () => {
+  test("Creates a new object out of all the objects in an array", () => {
+    const objects = [{ a: 1 }, { b: 3 }, { c: "foo" }];
+
+    const expected = {
+      a: 1,
+      b: 3,
+      c: "foo"
+    };
+
+    expect(Object.addAll(objects)).toEqual(expected);
+  });
+
+  test("Later objects in the array with the same keys as earlier objects overwrite previous ones", () => {
+    const objects = [{ a: 1 }, { b: 3 }, { a: "foo" }];
+
+    const expected = {
+      a: "foo",
+      b: 3
+    };
+
+    expect(Object.addAll(objects)).toEqual(expected);
+  });
+});

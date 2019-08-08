@@ -1,6 +1,6 @@
 # Advanced Objects: Sugar Library
 
-In this exercise we'll be creating some helpful extensions to the `Object` object in JavaScript, inspired by the [Sugar JavaScript library](https://sugarjs.com/docs/#/Object).
+In this exercise we'll be creating some helpful extensions to the `Object` object in JavaScript, inspired by the [Sugar JavaScript library](https://sugarjs.com/docs/#/Object). Note
 
 The aim of this exercise is to become more comfortable working with objects in JavaScript, specifically:
 
@@ -23,3 +23,5 @@ In this exercise, the tests are already written for you. Take a good look at the
 ### Further work
 
 If you want to extend this project in the future, perhaps to provide an additional item for your portfolio, take a look at other methods for Objects listed on the [Sugar documentation](https://sugarjs.com/docs/#/Object) and feel free to implement, and test, more methods of your choice.
+
+Many of the functions have more advanced functionality than we have implemented here - feel free to read the documentation and extend your methods to be more powerful, using the Red-Green-Refactor development cycle.
