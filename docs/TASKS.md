@@ -1,6 +1,6 @@
 # Tasks
 
-### Day 1: Advanced Objects
+### Part 1: Advanced Objects
 
 In class we will aim to solve `Object.size` and `Object.min`.
 
@@ -27,4 +27,14 @@ Then, continue with the following instructions
    - `invert`
    - `addAll`
 
-### Day 2: Functions as values
+### Part 2: Functions as values
+
+There are only 3 functions to complete this week.
+
+Implement the following functions using TDD:
+
+- `find`
+- `every`
+- `some`
+
+Remember that the tests are already written and will help you understand how the functions are intended to be used.
